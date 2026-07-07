@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StrayCare - Insieme facciamo la differenza</title>
+  <meta name="description" content="StrayCare è l'app per segnalare, monitorare e prendersi cura degli animali randagi nella tua città. Unisciti alla waitlist e segui il lancio della campagna crowdfunding." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-soft: #fff0e4;
+      --cream: #fef7e8;
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: rgba(31, 41, 55, 0.12);
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --max: 1160px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(249, 115, 22, 0.15), transparent 28%),
+        radial-gradient(circle at top right, rgba(251, 191, 36, 0.18), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #fffaf2 44%, #fafafa 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.05rem;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fff 0%, var(--primary-soft) 100%);
+      box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.18);
+      font-size: 1.2rem;
+    }
+
+    .brand span:last-child {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(249, 115, 22, 0.28);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .nav-cta:hover,
+    .nav-cta:focus-visible,
+    .primary-btn:hover,
+    .primary-btn:focus-visible,
+    .secondary-btn:hover,
+    .secondary-btn:focus-visible,
+    .submit-btn:hover,
+    .submit-btn:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .nav-cta:hover,
+    .nav-cta:focus-visible {
+      background: var(--primary-dark);
+      box-shadow: 0 14px 30px rgba(249, 115, 22, 0.34);
+    }
+
+    main {
+      padding-bottom: 0;
+    }
+
+    .hero {
+      padding: 42px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy,
+    .mockup-shell,
+    .info-card,
+    .feature-card,
+    .cta-box {
+      animation: fadeUp 700ms ease both;
+    }
+
+    .mockup-shell {
+      animation-delay: 120ms;
+    }
+
+    .info-card:nth-child(2),
+    .feature-card:nth-child(2) {
+      animation-delay: 80ms;
+    }
+
+    .feature-card:nth-child(3) {
+      animation-delay: 140ms;
+    }
+
+    .feature-card:nth-child(4) {
+      animation-delay: 200ms;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.1);
+      color: #c2410c;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4.7rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy p {
+      max-width: 56ch;
+      font-size: 1.02rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(249, 115, 22, 0.28);
+    }
+
+    .primary-btn:hover,
+    .primary-btn:focus-visible {
+      background: var(--primary-dark);
+    }
+
+    .secondary-btn {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .secondary-btn:hover,
+    .secondary-btn:focus-visible {
+      border-color: rgba(249, 115, 22, 0.38);
+      background: var(--primary-soft);
+      color: #9a3412;
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .proof-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border);
+      color: #374151;
+      font-size: 0.92rem;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .mockup-shell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .mockup-placeholder {
+      width: min(100%, 360px);
+      aspect-ratio: 0.72 / 1;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 240, 228, 0.96)),
+        linear-gradient(180deg, #fff, #fff);
+      border: 1px solid rgba(31, 41, 55, 0.08);
+      box-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+    }
+
+    .mockup-placeholder::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 22% 20%, rgba(249, 115, 22, 0.26), transparent 18%),
+        radial-gradient(circle at 78% 14%, rgba(251, 191, 36, 0.22), transparent 14%),
+        linear-gradient(180deg, #fff8ef 0%, #ffffff 60%, #fff6ea 100%);
+      border: 1px dashed rgba(249, 115, 22, 0.28);
+    }
+
+    .mockup-ui {
+      position: absolute;
+      inset: 0;
+      padding: 26px 22px 22px;
+      display: grid;
+      gap: 14px;
+      color: #111827;
+    }
+
+    .mockup-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+
+    .mockup-panel {
+      background: #f97316;
+      color: #fff;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 14px 28px rgba(249, 115, 22, 0.22);
+    }
+
+    .mockup-panel strong {
+      display: block;
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 20px;
+      padding: 16px 10px;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(31, 41, 55, 0.08);
+    }
+
+    .mini-number {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .mini-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .mockup-list {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      padding: 14px;
+      box-shadow: inset 0 0 0 1px rgba(31, 41, 55, 0.08);
+    }
+
+    .mockup-list-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .mockup-list-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 28px 0;
+    }
+
+    .section-heading {
+      max-width: 68ch;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.7rem, 3vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 66ch;
+    }
+
+    .problem-solution {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .info-card p {
+      color: var(--muted);
+    }
+
+    .problem-card {
+      background: linear-gradient(180deg, #ffffff, #fff8f3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card::after,
+    .solution-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      right: -70px;
+      top: -70px;
+      background: rgba(249, 115, 22, 0.08);
+      pointer-events: none;
+    }
+
+    .solution-card {
+      background: linear-gradient(180deg, #fffaf3, #ffffff);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.1);
+      color: #c2410c;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .feature-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      min-height: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(249, 115, 22, 0.26);
+      box-shadow: 0 22px 54px rgba(15, 23, 42, 0.1);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #fff2e6, #fff);
+      border: 1px solid rgba(249, 115, 22, 0.16);
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+    }
+
+    .cta-section {
+      padding: 18px 0 42px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, #f97316 0%, #fb923c 52%, #f59e0b 100%);
+      color: #fff;
+      border-radius: 30px;
+      padding: 28px 20px;
+      box-shadow: 0 24px 60px rgba(249, 115, 22, 0.32);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-box::before,
+    .cta-box::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+    }
+
+    .cta-box::before {
+      width: 220px;
+      height: 220px;
+      top: -90px;
+      right: -60px;
+    }
+
+    .cta-box::after {
+      width: 160px;
+      height: 160px;
+      bottom: -70px;
+      left: -50px;
+    }
+
+    .cta-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .cta-copy h2 {
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .cta-copy p {
+      max-width: 60ch;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .waitlist-form-wrap {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .waitlist-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .form-note {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-status {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(17, 24, 39, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .waitlist-form input {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 16px;
+      padding: 0 16px;
+      font: inherit;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: inset 0 0 0 1px rgba(31, 41, 55, 0.08);
+    }
+
+    .waitlist-form input:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.55);
+      outline-offset: 2px;
+      box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.12);
+    }
+
+    .waitlist-form input.error {
+      box-shadow: inset 0 0 0 2px rgba(185, 28, 28, 0.8);
+    }
+
+    .waitlist-form input::placeholder {
+      color: #9ca3af;
+    }
+
+    .submit-btn {
+      background: #111827;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(17, 24, 39, 0.18);
+    }
+
+    .submit-btn:hover,
+    .submit-btn:focus-visible {
+      background: #ff6f01;
+    }
+
+    .success-message {
+      display: none;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .footer {
+      padding: 22px 0 34px;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(31, 41, 55, 0.08);
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .socials a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border);
+      transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+    }
+
+    .socials a:hover,
+    .socials a:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(249, 115, 22, 0.28);
+      background: var(--primary-soft);
+      outline: none;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding-top: 56px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 42px;
+      }
+
+      .problem-solution {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-box {
+        padding: 36px 32px;
+      }
+
+      .cta-layout {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .footer-inner {
+        flex-direction: row;
+        text-align: left;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .feature-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .hero-copy p {
+        font-size: 1.08rem;
+      }
+
+      .mockup-shell {
+        justify-self: end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="StrayCare home">
+        <span class="brand-badge" aria-hidden="true">🐾</span>
+        <span>Stray<span>Care</span></span>
+      </a>
+      <a class="nav-cta" href="#waitlist">Sostieni il progetto</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">❤️ Una community che aiuta davvero</div>
+          <h1>StrayCare: Insieme facciamo la differenza per gli animali randagi.</h1>
+          <p>Un'app per segnalare, monitorare e prendersi cura dei randagi nella tua città. Digitalizziamo la solidarietà, unisciti al nostro branco.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#waitlist">Unisciti alla Lista d'Attesa</a>
+            <a class="secondary-btn" href="#features">Scopri le funzionalità</a>
+          </div>
+          <div class="hero-proof" aria-label="Punti di forza del progetto">
+            <span class="proof-pill">Segnalazioni geolocalizzate</span>
+            <span class="proof-pill">Notifiche in tempo reale</span>
+            <span class="proof-pill">Crowdfunding in arrivo</span>
+          </div>
+        </div>
+
+        <div class="mockup-shell" aria-label="Anteprima app">
+          <div class="mockup-placeholder" role="img" aria-label="Placeholder screenshot dell'app StrayCare">
+            <div class="mockup-ui">
+              <div class="mockup-top">
+                <div class="app-logo"><span aria-hidden="true">🐾</span> StrayCare</div>
+                <div>10:48</div>
+              </div>
+              <div class="mockup-panel">
+                <strong>Segnala, monitora, aiuta.</strong>
+                <span>Una rete semplice e immediata per gli animali randagi della tua città.</span>
+              </div>
+              <div class="stats-grid">
+                <div class="mini-card">
+                  <div class="mini-number">10</div>
+                  <div class="mini-label">Segnalazioni effettuate</div>
+                </div>
+                <div class="mini-card">
+                  <div class="mini-number">5</div>
+                  <div class="mini-label">Utenti attivi</div>
+                </div>
+                <div class="mini-card">
+                  <div class="mini-number">57</div>
+                  <div class="mini-label">Pasti registrati</div>
+                </div>
+                <div class="mini-card">
+                  <div class="mini-number">1</div>
+                  <div class="mini-label">Associazioni attive</div>
+                </div>
+              </div>
+              <div class="mockup-list">
+                <div class="mockup-list-title">Segnalazioni vicine a me</div>
+                <div class="mockup-list-note">Nessuna segnalazione aggiunta recentemente.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Il problema è reale. La soluzione deve essere semplice, collaborativa e immediata.</h2>
+          <p>Molte segnalazioni restano isolate, i volontari non hanno strumenti coordinati e gli interventi arrivano spesso troppo tardi. StrayCare unisce cittadini, associazioni e persone che vogliono aiutare.</p>
+        </div>
+
+        <div class="problem-solution">
+          <article class="info-card problem-card">
+            <div class="highlight-tag">Il problema</div>
+            <h3>Difficoltà a monitorare i randagi</h3>
+            <p>Oggi è complicato capire dove si trovano gli animali in difficoltà, chi li ha già segnalati e quali azioni siano già state intraprese. La collaborazione è frammentata e mancano strumenti digitali centralizzati.</p>
+          </article>
+          <article class="info-card solution-card">
+            <div class="highlight-tag">La soluzione</div>
+            <h3>Una rete che connette persone e volontari</h3>
+            <p>StrayCare permette di segnalare animali in difficoltà con geolocalizzazione, ricevere notifiche e creare una rete di aiuto immediato. Ogni segnalazione diventa un punto di partenza per un'azione concreta.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Funzionalità pensate per rendere l'aiuto più veloce, chiaro e coinvolgente.</h2>
+          <p>Abbiamo progettato l'esperienza per essere intuitiva su smartphone, con un approccio friendly che premia l'impegno e aiuta davvero chi si prende cura dei randagi.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🗺️</div>
+            <h3>Mappa interattiva</h3>
+            <p>Trova le segnalazioni in Italia, esplora la zona e identifica rapidamente gli interventi già attivi vicino a te.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🍲</div>
+            <h3>Dai da mangiare e cure</h3>
+            <p>Tieni traccia dell'ultimo pasto con un cronometro intelligente e registra le cure mediche per costruire uno storico utile.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔔</div>
+            <h3>Community e notifiche</h3>
+            <p>Ricevi alert locali se c'è un randagio in pericolo vicino a te e resta aggiornato sulle attività della tua area.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🏆</div>
+            <h3>Classifica utenti</h3>
+            <p>Diventa un volontario attivo, guadagna punti con i tuoi contributi e scala la leaderboard con la gamification.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="waitlist">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-layout">
+            <div class="cta-copy">
+              <h2>Il progetto sta per nascere. Aiutaci a renderlo realtà.</h2>
+              <p>Stiamo preparando una campagna di Crowdfunding per sviluppare StrayCare. Inserisci la tua email per ricevere aggiornamenti e scoprire come diventare uno dei nostri primi sostenitori.</p>
+            </div>
+
+            <div class="waitlist-form-wrap" id="waitlistFormWrap">
+              <form class="waitlist-form" id="waitlistForm" novalidate>
+                <label class="sr-only" for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="La tua email principale" autocomplete="email" required />
+                <button class="submit-btn" type="submit">Avvisami al lancio</button>
+              </form>
+              <div class="form-note">Ogni iscrizione verrà inviata a straycareofficial@gmail.com e sarà usata solo per aggiornamenti sul progetto.</div>
+              <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+              <div class="success-message" id="successMessage" aria-live="polite">Grazie! Ti abbiamo aggiunto alla lista.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>Copyright StrayCare 2026</div>
+      <nav class="socials" aria-label="Link social">
+        <a href="#" aria-label="Instagram StrayCare">Instagram</a>
+        <a href="#" aria-label="Facebook StrayCare">Facebook</a>
+        <a href="#" aria-label="TikTok StrayCare">TikTok</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const waitlistForm = document.getElementById('waitlistForm');
+    const waitlistFormWrap = document.getElementById('waitlistFormWrap');
+    const emailInput = document.getElementById('email');
+    const formStatus = document.getElementById('formStatus');
+    const successMessage = document.getElementById('successMessage');
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showStatus(message, type) {
+      formStatus.textContent = message;
+      formStatus.style.display = 'block';
+      formStatus.style.background = type === 'error' ? 'rgba(185, 28, 28, 0.22)' : 'rgba(17, 24, 39, 0.18)';
+      formStatus.style.borderColor = type === 'error' ? 'rgba(248, 113, 113, 0.35)' : 'rgba(255, 255, 255, 0.2)';
+    }
+
+    waitlistForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+
+      if (!emailPattern.test(email)) {
+        emailInput.classList.add('error');
+        showStatus('Inserisci un indirizzo email valido per iscriverti alla lista.', 'error');
+        emailInput.focus();
+        return;
+      }
+
+      emailInput.classList.remove('error');
+
+      try {
+        const response = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+
+        const payload = await response.json().catch(function () {
+          return {};
+        });
+
+        if (!response.ok) {
+          throw new Error(payload.error || 'Invio non riuscito.');
+        }
+
+        formStatus.style.display = 'none';
+        waitlistForm.style.display = 'none';
+        successMessage.style.display = 'block';
+        waitlistFormWrap.setAttribute('aria-busy', 'false');
+      } catch (error) {
+        showStatus('Non siamo riusciti a inviare la richiesta. Riprova tra poco.', 'error');
+      }
+    });
+
+    emailInput.addEventListener('input', function () {
+      if (emailInput.classList.contains('error') && emailPattern.test(emailInput.value.trim())) {
+        emailInput.classList.remove('error');
+        formStatus.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
