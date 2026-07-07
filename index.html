@@ -1168,7 +1168,7 @@
         formStatus.style.display = 'none';
         successMessage.textContent = payload.warning === 'smtp-not-configured'
           ? 'Iscrizione registrata. L’invio email sarà attivo quando il backend sarà configurato.'
-          : 'Grazie. Ti abbiamo aggiunto alla lista.';
+          : 'Grazie. Ti abbiamo aggiunto alla lista. E’ stata inviata un’email di avvenuta iscrizione, controlla anche la casella spam.';
         successMessage.style.display = 'block';
       } catch (error) {
         setStatus('Non siamo riusciti a inviare la richiesta. Riprova tra poco.', 'error');
