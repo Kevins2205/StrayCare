@@ -1,0 +1,9 @@
+{
+  "name": "straycare-landing",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Landing page for StrayCare with Vercel waitlist email endpoint.",
+  "dependencies": {
+    "nodemailer": "^9.0.3"
+  }
+}
