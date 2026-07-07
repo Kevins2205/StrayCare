@@ -2,7 +2,8 @@ const fs = require('fs/promises');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
-const STORE_PATH = path.join(__dirname, 'waitlist-store.json');
+const STORE_PATH = process.env.WAITLIST_STORE_PATH
+  || (process.env.VERCEL ? '/tmp/waitlist-store.json' : path.join(__dirname, 'waitlist-store.json'));
 
 function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -35,7 +36,7 @@ async function readStore() {
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (error.code === 'ENOENT' || error.code === 'EACCES' || error.code === 'EROFS') {
       return [];
     }
 
@@ -142,7 +143,13 @@ module.exports = async function handler(req, res) {
       }
     ];
 
-    await writeStore(updatedEntries);
+    try {
+      await writeStore(updatedEntries);
+    } catch (storeError) {
+      if (storeError.code !== 'EACCES' && storeError.code !== 'EROFS') {
+        throw storeError;
+      }
+    }
 
     if (canSendEmail && transporter) {
       const [adminResult, thankYouResult] = await Promise.allSettled([
