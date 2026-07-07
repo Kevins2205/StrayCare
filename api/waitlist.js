@@ -109,22 +109,19 @@ module.exports = async function handler(req, res) {
   const smtpPass = process.env.SMTP_PASS;
   const mailTo = process.env.MAIL_TO || 'straycareofficial@gmail.com';
   const normalizedEmail = normalizeEmail(email);
+  const canSendEmail = Boolean(smtpHost && smtpUser && smtpPass);
 
-  if (!smtpHost || !smtpUser || !smtpPass) {
-    return res.status(500).json({
-      error: 'Missing SMTP configuration. Set SMTP_HOST, SMTP_PORT, SMTP_USER and SMTP_PASS in Vercel.'
-    });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpPort === 465,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass
-    }
-  });
+  const transporter = canSendEmail
+    ? nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      })
+    : null;
 
   try {
     const entries = await readStore();
@@ -147,29 +144,33 @@ module.exports = async function handler(req, res) {
 
     await writeStore(updatedEntries);
 
-    const [adminResult, thankYouResult] = await Promise.allSettled([
-      transporter.sendMail({
-      from: process.env.MAIL_FROM || `StrayCare <${smtpUser}>`,
-      to: mailTo,
-      replyTo: email,
-      subject: 'Nuova iscrizione alla waitlist StrayCare',
-      text: `Nuova email waitlist: ${email}\n\nInviata dalla landing StrayCare.`,
-      html: buildAdminHtml(email)
-      }),
-      transporter.sendMail({
-        from: process.env.MAIL_FROM || `StrayCare <${smtpUser}>`,
-        to: email,
-        subject: 'Grazie per il tuo supporto a StrayCare',
-        text: `Grazie per il tuo supporto a StrayCare. Riceverai presto aggiornamenti sulla piattaforma e sulla campagna crowdfunding.`,
-        html: buildThankYouHtml(email)
-      })
-    ]);
+    if (canSendEmail && transporter) {
+      const [adminResult, thankYouResult] = await Promise.allSettled([
+        transporter.sendMail({
+          from: process.env.MAIL_FROM || `StrayCare <${smtpUser}>`,
+          to: mailTo,
+          replyTo: email,
+          subject: 'Nuova iscrizione alla waitlist StrayCare',
+          text: `Nuova email waitlist: ${email}\n\nInviata dalla landing StrayCare.`,
+          html: buildAdminHtml(email)
+        }),
+        transporter.sendMail({
+          from: process.env.MAIL_FROM || `StrayCare <${smtpUser}>`,
+          to: email,
+          subject: 'Grazie per il tuo supporto a StrayCare',
+          text: `Grazie per il tuo supporto a StrayCare. Riceverai presto aggiornamenti sulla piattaforma e sulla campagna crowdfunding.`,
+          html: buildThankYouHtml(email)
+        })
+      ]);
 
-    if (thankYouResult.status === 'rejected') {
-      return res.status(500).json({ error: 'Unable to send thank-you email' });
+      if (thankYouResult.status === 'rejected') {
+        return res.status(500).json({ error: 'Unable to send thank-you email' });
+      }
+
+      return res.status(200).json({ ok: true, warning: adminResult.status === 'rejected' ? 'admin-notification-failed' : undefined });
     }
 
-    return res.status(200).json({ ok: true, warning: adminResult.status === 'rejected' ? 'admin-notification-failed' : undefined });
+    return res.status(200).json({ ok: true, warning: 'smtp-not-configured' });
   } catch (error) {
     return res.status(500).json({ error: 'Unable to send email' });
   }

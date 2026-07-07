@@ -1008,6 +1008,7 @@
     const panelTitle = document.getElementById('panelTitle');
     const panelText = document.getElementById('panelText');
     const revealTargets = document.querySelectorAll('[data-reveal]');
+    const waitlistStorageKey = 'straycare-waitlist-local';
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -1063,6 +1064,33 @@
       formStatus.style.borderColor = kind === 'error' ? 'rgba(248, 113, 113, 0.35)' : 'rgba(255, 255, 255, 0.16)';
     }
 
+    function readLocalWaitlist() {
+      try {
+        const raw = window.localStorage.getItem(waitlistStorageKey);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function writeLocalWaitlist(entries) {
+      window.localStorage.setItem(waitlistStorageKey, JSON.stringify(entries));
+    }
+
+    function saveLocally(email) {
+      const normalizedEmail = email.toLowerCase();
+      const entries = readLocalWaitlist();
+
+      if (entries.some((entry) => String(entry).toLowerCase() === normalizedEmail)) {
+        return { ok: false, duplicate: true };
+      }
+
+      entries.push(email);
+      writeLocalWaitlist(entries);
+      return { ok: true };
+    }
+
     waitlistForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -1080,6 +1108,27 @@
       submitButton.textContent = 'Invio in corso...';
 
       try {
+        const shouldUseLocalFallback =
+          window.location.protocol === 'file:' ||
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.port === '5500';
+
+        if (shouldUseLocalFallback) {
+          const localResult = saveLocally(email);
+
+          if (!localResult.ok && localResult.duplicate) {
+            setStatus('Questa email è già stata registrata nella waitlist.', 'error');
+            return;
+          }
+
+          waitlistForm.style.display = 'none';
+          formStatus.style.display = 'none';
+          successMessage.textContent = 'Iscrizione salvata localmente. La modalità email non è disponibile in questa preview.';
+          successMessage.style.display = 'block';
+          return;
+        }
+
         const response = await fetch('/api/waitlist', {
           method: 'POST',
           headers: {
@@ -1091,12 +1140,35 @@
 
         const payload = await response.json().catch(() => ({}));
 
+        if (response.status === 409) {
+          setStatus(payload.error || 'Questa email è già presente nella waitlist.', 'error');
+          return;
+        }
+
         if (!response.ok) {
+          if (response.status === 403 || response.status === 404 || response.status === 405) {
+            const localResult = saveLocally(email);
+
+            if (!localResult.ok && localResult.duplicate) {
+              setStatus('Questa email è già stata registrata nella waitlist.', 'error');
+              return;
+            }
+
+            waitlistForm.style.display = 'none';
+            formStatus.style.display = 'none';
+            successMessage.textContent = 'Iscrizione salvata localmente. Il backend non è disponibile in questa preview.';
+            successMessage.style.display = 'block';
+            return;
+          }
+
           throw new Error(payload.error || 'Invio non riuscito');
         }
 
         waitlistForm.style.display = 'none';
         formStatus.style.display = 'none';
+        successMessage.textContent = payload.warning === 'smtp-not-configured'
+          ? 'Iscrizione registrata. L’invio email sarà attivo quando il backend sarà configurato.'
+          : 'Grazie. Ti abbiamo aggiunto alla lista.';
         successMessage.style.display = 'block';
       } catch (error) {
         setStatus('Non siamo riusciti a inviare la richiesta. Riprova tra poco.', 'error');
