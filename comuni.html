@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StrayCare GovTech | Soluzione SaaS B2G per Comuni, ASL e Decisori Pubblici</title>
+  <meta name="description" content="Piattaforma territoriale GovTech per la gestione integrata del randagismo, delle colonie feline e del decoro urbano. Affidamento diretto sotto soglia ai sensi del D.Lgs. 36/2023." />
+  <meta name="theme-color" content="#fb7a1a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAFA;
+      --surface: #ffffff;
+      --surface-subtle: #f6f8fa;
+      --text: #1d1d1f;
+      --muted: #57606a;
+      --line: rgba(25, 33, 42, 0.08);
+      --brand: #fb7a1a;
+      --brand-hover: #e2660f;
+      --brand-soft: #fff2e6;
+      --institutional-navy: #0f172a;
+      --institutional-blue: #1e3a8a;
+      --institutional-blue-soft: #eef2ff;
+      --accent-green: #0d8a56;
+      --accent-green-soft: #e6f7ef;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1160px;
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 12px 32px rgba(25, 33, 42, 0.06);
+      --shadow-lg: 0 20px 48px rgba(251, 122, 26, 0.07);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 5% 0%, rgba(251, 122, 26, 0.04), transparent 30%),
+        radial-gradient(circle at 95% 15%, rgba(30, 58, 138, 0.03), transparent 25%),
+        var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4, p { margin: 0; }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    /* HEADER & NAV */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(250, 250, 250, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      font-size: 1.35rem;
+      display: inline-block;
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1.15;
+    }
+
+    .brand-copy strong {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .brand-copy span {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .nav-tag-pa {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--institutional-blue-soft);
+      color: var(--institutional-blue);
+      border: 1px solid rgba(30, 58, 138, 0.15);
+      margin-left: 4px;
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      color: var(--brand);
+      outline: none;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-to-citizen {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .back-to-citizen:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: var(--brand-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn-header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid var(--brand);
+      transition: all 0.2s ease;
+    }
+
+    .btn-header-cta:hover {
+      background: var(--brand-hover);
+      box-shadow: 0 4px 14px rgba(251, 122, 26, 0.25);
+    }
+
+    /* BUTTONS */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #ffffff;
+      border-color: var(--brand);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-hover);
+      border-color: var(--brand-hover);
+      box-shadow: 0 6px 16px rgba(251, 122, 26, 0.15);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brand);
+      border-color: var(--brand);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brand);
+      color: var(--brand-hover);
+      background: rgba(251, 122, 26, 0.05);
+      border-color: var(--brand-hover);
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3 {
+      font-family: "Fraunces", Georgia, serif;
+      letter-spacing: -0.03em;
+      line-height: 1.18;
+      color: var(--text);
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      width: fit-content;
+    }
+
+    .eyebrow-navy {
+      background: var(--institutional-blue-soft);
+      color: var(--institutional-blue);
+      border: 1px solid rgba(30, 58, 138, 0.15);
+    }
+
+    .eyebrow-orange {
+      background: var(--brand-soft);
+      color: #ba4c00;
+      border: 1px solid rgba(251, 122, 26, 0.22);
+    }
+
+    .section-head {
+      max-width: 80ch;
+      margin-bottom: 48px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 3.8vw, 2.75rem);
+      margin-bottom: 16px;
+    }
+
+    .section-head p {
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 70px 0;
+    }
+
+    @media (min-width: 980px) {
+      .section {
+        padding: 100px 0;
+      }
+    }
+
+    /* HERO SECTION */
+    .hero-pa {
+      padding: 60px 0 50px;
+      position: relative;
+    }
+
+    @media (min-width: 980px) {
+      .hero-pa {
+        padding: 80px 0 70px;
+      }
+    }
+
+    .hero-pa-grid {
+      display: grid;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-pa-copy h1 {
+      font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+      margin-bottom: 22px;
+      color: var(--text);
+    }
+
+    .hero-pa-copy p.hero-lead {
+      font-size: 1.18rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 58ch;
+    }
+
+    .hero-actions-pa {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .trust-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .trust-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #333d47;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    /* HERO DASHBOARD PREVIEW CARD */
+    .dashboard-preview-card {
+      background: #ffffff;
+      border: 1px solid rgba(25, 33, 42, 0.08);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .dashboard-preview-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 42px rgba(25, 33, 42, 0.1);
+      border-color: rgba(251, 122, 26, 0.22);
+    }
+
+    .preview-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(25, 33, 42, 0.06);
+      margin-bottom: 20px;
+    }
+
+    .preview-card-title {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--accent-green);
+      background: var(--accent-green-soft);
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .status-live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      display: inline-block;
+    }
+
+    .preview-stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .mini-stat-box {
+      background: var(--surface-subtle);
+      border: 1px solid rgba(25, 33, 42, 0.04);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .mini-stat-label {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mini-stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .mini-stat-delta {
+      font-size: 0.72rem;
+      color: var(--accent-green);
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    .preview-list-card {
+      background: #ffffff;
+      border: 1px solid rgba(25, 33, 42, 0.06);
+      border-radius: 14px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(25, 33, 42, 0.05);
+    }
+
+    .list-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .badge-alert {
+      background: #fef2f2;
+      color: #b91c1c;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .badge-ok {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    /* SECTION 1: IL PROBLEMA MACROECONOMICO */
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .macro-card {
+      background: #ffffff;
+      border: 1px solid rgba(25, 33, 42, 0.07);
+      border-radius: var(--radius-lg);
+      padding: 32px 26px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .macro-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(251, 122, 26, 0.3);
+    }
+
+    .macro-number {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2rem, 3.6vw, 2.7rem);
+      font-weight: 800;
+      color: #c04a00;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .macro-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .macro-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .macro-source {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(25, 33, 42, 0.08);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #7b8895;
+    }
+
+    /* COMPARISON TABLE: PRIMA VS ORA */
+    .comparison-shell {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .comparison-col {
+      padding: 36px 32px;
+    }
+
+    .col-before {
+      background: #fff8f5;
+      border-bottom: 1px solid #ffe0d0;
+    }
+
+    @media (min-width: 768px) {
+      .col-before {
+        border-bottom: none;
+        border-right: 1px solid #ffe0d0;
+      }
+    }
+
+    .col-after {
+      background: #f4fbf8;
+    }
+
+    .comparison-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .badge-before {
+      background: #ffd9c7;
+      color: #9c2e00;
+    }
+
+    .badge-after {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+    }
+
+    .comparison-col h3 {
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .comparison-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+      font-size: 0.94rem;
+      color: #333d47;
+    }
+
+    .comparison-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .icon-fail { color: #d9381e; font-weight: 800; flex-shrink: 0; }
+    .icon-check { color: var(--accent-green); font-weight: 800; flex-shrink: 0; }
+
+    /* SECTION 2: VANTAGGI OPERATIVI SAAS B2G */
+    .b2g-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 28px;
+    }
+
+    .b2g-card {
+      background: #ffffff;
+      border: 1px solid rgba(25, 33, 42, 0.06);
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .b2g-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(251, 122, 26, 0.25);
+    }
+
+    .b2g-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background: var(--brand-soft);
+    }
+
+    .b2g-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .b2g-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .b2g-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .b2g-tag {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #374151;
+      background: var(--surface-subtle);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(25, 33, 42, 0.05);
+    }
+
+    /* SECTION 3: QUADRO NORMATIVO */
+    .legal-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 48px 36px;
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.15);
+      display: grid;
+      gap: 36px;
+    }
+
+    @media (min-width: 900px) {
+      .legal-box {
+        grid-template-columns: 1.15fr 0.85fr;
+        padding: 56px 48px;
+        align-items: center;
+      }
+    }
+
+    .legal-copy h2 {
+      color: #ffffff;
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+      margin-bottom: 18px;
+    }
+
+    .legal-copy p {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .legal-highlight-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .legal-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(251, 122, 26, 0.2);
+      color: #ff9a3e;
+      border: 1px solid rgba(251, 122, 26, 0.4);
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .legal-highlight-card h4 {
+      font-size: 1.35rem;
+      font-family: "Fraunces", Georgia, serif;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .legal-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: grid;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+    }
+
+    .legal-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* SECTION 4: PRICING TABELLE */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .pricing-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 38px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--brand);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .featured-ribbon {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--brand);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(251, 122, 26, 0.25);
+    }
+
+    .pricing-header {
+      margin-bottom: 24px;
+    }
+
+    .pricing-tier-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .pricing-tier-pop {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .pricing-price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .pricing-amount {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .pricing-period {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .pricing-monthly-note {
+      font-size: 0.82rem;
+      color: #ba4c00;
+      font-weight: 700;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: rgba(25, 33, 42, 0.07);
+      margin: 20px 0;
+    }
+
+    .pricing-features-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px 0;
+      display: grid;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: #374151;
+      flex-grow: 1;
+    }
+
+    .pricing-features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.45;
+    }
+
+    .pricing-features-list li span.check {
+      color: var(--accent-green);
+      font-weight: 800;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    /* INTERACTIVE ROI SIMULATOR */
+    .roi-simulator {
+      background: #ffffff;
+      border: 1px solid rgba(251, 122, 26, 0.22);
+      border-radius: var(--radius-xl);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .roi-grid {
+      display: grid;
+      gap: 32px;
+    }
+
+    @media (min-width: 860px) {
+      .roi-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+
+    .roi-controls {
+      display: grid;
+      gap: 20px;
+    }
+
+    .control-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .range-slider {
+      width: 100%;
+      accent-color: var(--brand);
+      height: 8px;
+      cursor: pointer;
+    }
+
+    .roi-results-box {
+      background: var(--surface-subtle);
+      border: 1px solid rgba(25, 33, 42, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(25, 33, 42, 0.08);
+      font-size: 0.95rem;
+    }
+
+    .result-row.highlight {
+      border-bottom: none;
+      padding-top: 6px;
+      font-weight: 800;
+    }
+
+    .result-number {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .result-number.result-cost {
+      color: #a84d14;
+    }
+
+    .result-saving {
+      color: var(--accent-green);
+      font-size: 1.6rem;
+    }
+
+    .result-saving.negative {
+      color: #b45309;
+    }
+
+    .roi-summary-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: var(--surface-subtle);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    /* SECTION 5: CONTACT FORM PA */
+    .contact-pa-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 44px 36px;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (min-width: 900px) {
+      .contact-pa-layout {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 48px;
+        align-items: start;
+      }
+    }
+
+    .contact-info-col h2 {
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .contact-info-col p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .contact-details-box {
+      background: var(--surface-subtle);
+      border-radius: 16px;
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+      font-size: 0.92rem;
+      border: 1px solid rgba(25, 33, 42, 0.05);
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #333d47;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 600px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-field label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 10px 14px;
+      border: 1px solid rgba(25, 33, 42, 0.14);
+      border-radius: 12px;
+      font: inherit;
+      background: #ffffff;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .form-field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(251, 122, 26, 0.15);
+    }
+
+    .form-field input.error,
+    .form-field select.error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+    }
+
+    .pa-form-submit {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .form-feedback {
+      display: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .form-feedback.success {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 1px solid rgba(13, 138, 86, 0.2);
+    }
+
+    .form-feedback.error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid rgba(185, 28, 28, 0.2);
+    }
+
+    /* FOOTER ISTITUZIONALE */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--line);
+      padding: 48px 0 36px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-content {
+      display: grid;
+      gap: 32px;
+    }
+
+    .footer-top-row {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      .footer-top-row {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .footer-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-weight: 600;
+    }
+
+    .footer-links-row a:hover {
+      color: var(--brand);
+    }
+
+    .footer-legal-note {
+      padding-top: 24px;
+      border-top: 1px solid rgba(25, 33, 42, 0.06);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: #7b8895;
+    }
+
+    /* Mobile navigation and compact layouts */
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid rgba(25, 33, 42, 0.12);
+      border-radius: 12px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 4px auto;
+      border-radius: 2px;
+      background: var(--text);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .mobile-menu-drawer {
+      display: grid;
+      gap: 4px;
+      max-height: 0;
+      padding: 0 20px;
+      border-top: 1px solid var(--line);
+      background: rgba(250, 250, 250, 0.98);
+      box-shadow: 0 14px 30px rgba(25, 33, 42, 0.06);
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-menu-drawer .container {
+      display: grid;
+      gap: 4px;
+    }
+
+    .mobile-menu-drawer.is-open {
+      max-height: 500px;
+      padding: 14px 20px 20px;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-drawer a {
+      padding: 9px 0;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .mobile-menu-drawer .mobile-demo-link {
+      margin-top: 4px;
+      color: var(--brand-hover);
+      border-top: 1px dashed var(--line);
+      padding-top: 14px;
+    }
+
+    [data-reveal].is-visible.b2g-card:hover,
+    [data-reveal].is-visible.pricing-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .mobile-menu-drawer .mobile-demo-cta {
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .list-item-row {
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pricing-price-wrap {
+      flex-wrap: wrap;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    [data-reveal].is-visible.dashboard-preview-card:hover,
+    [data-reveal].is-visible.macro-card:hover,
+    [data-reveal].is-visible.b2g-card:hover,
+    [data-reveal].is-visible.pricing-card:hover {
+      transform: translateY(-8px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    @media (max-width: 1100px) {
+      .nav-tag-pa {
+        display: none;
+      }
+
+      .nav {
+        display: none !important;
+      }
+
+      .back-to-citizen {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .btn-header-cta {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .container {
+        width: min(calc(100% - 32px), var(--max));
+      }
+
+      .header-inner {
+        min-height: 62px;
+        gap: 8px;
+      }
+
+      .brand-wrap {
+        min-width: 0;
+        gap: 7px;
+      }
+
+      .nav-tag-pa {
+        display: none;
+      }
+
+      .header-actions {
+        gap: 6px;
+      }
+
+      .back-to-citizen {
+        display: none;
+      }
+
+      .btn-header-cta {
+        padding: 7px 11px;
+        font-size: 0.76rem;
+        white-space: nowrap;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav {
+        display: none !important;
+      }
+
+      .hero-pa {
+        padding: 36px 0 32px;
+      }
+
+      .hero-pa-copy h1 {
+        font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+        margin-bottom: 16px;
+      }
+
+      .hero-pa-copy p.hero-lead {
+        font-size: 1rem;
+        margin-bottom: 22px;
+      }
+
+      .section {
+        padding: 52px 0;
+      }
+
+      .section-head {
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+      }
+
+      .section-head p {
+        font-size: 0.98rem;
+      }
+
+      .section-eyebrow {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+      }
+
+      .hero-actions-pa,
+      .trust-badges-row {
+        align-items: stretch;
+      }
+
+      .hero-actions-pa .btn-primary,
+      .hero-actions-pa .btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+
+      .dashboard-preview-card,
+      .legal-box,
+      .pricing-card,
+      .contact-pa-card,
+      .roi-simulator {
+        padding: 20px 16px;
+      }
+
+      .preview-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .mini-stat-box {
+        padding: 11px;
+      }
+
+      .mini-stat-value {
+        font-size: 1.05rem;
+      }
+
+      .b2g-card {
+        padding: 22px 18px;
+      }
+
+      .macro-card {
+        padding: 22px 18px;
+      }
+
+      .macro-grid,
+      .b2g-features-grid,
+      .pricing-grid {
+        gap: 16px;
+      }
+
+      .macro-grid,
+      .b2g-features-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-amount {
+        font-size: clamp(1.8rem, 9vw, 2.2rem);
+      }
+
+      .comparison-col {
+        padding: 22px 18px;
+      }
+
+      .detail-item {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand-copy span {
+        display: none;
+      }
+
+      .brand-copy strong {
+        font-size: 0.96rem;
+      }
+
+      .btn-header-cta {
+        padding-inline: 9px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .nav { display: inline-flex; }
+      .hero-pa-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER ISTITUZIONALE -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-wrap">
+        <a class="brand" href="index.html" aria-label="StrayCare Home">
+          <span class="brand-mark" aria-hidden="true">🐾</span>
+          <span class="brand-copy">
+            <strong>StrayCare</strong>
+          </span>
+        </a>
+        <span class="nav-tag-pa">Area Comuni & PA</span>
+      </div>
+
+      <nav class="nav" aria-label="Sezioni Istituzionali">
+        <a href="#problema">Il Problema</a>
+        <a href="#soluzione-b2g">Soluzione</a>
+        <a href="#quadro-normativo">Normativa</a>
+        <a href="#pricing">Tariffe</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="back-to-citizen" href="index.html">👥 Torna all'App per i Cittadini</a>
+        <a class="btn-header-cta" href="#contatti-pa">Richiedi Demo</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Apri menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-menu-drawer" id="mobileMenuDrawer" aria-hidden="true">
+      <div class="container">
+        <a href="#problema">Il Problema</a>
+        <a href="#soluzione-b2g">Soluzione</a>
+        <a href="#quadro-normativo">Normativa</a>
+        <a href="#pricing">Tariffe</a>
+        <a href="index.html" class="mobile-demo-link">Torna all'app cittadini</a>
+        <a href="#contatti-pa" class="btn-primary mobile-demo-cta">Richiedi Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-pa" id="top">
+      <div class="container hero-pa-grid">
+        <div class="hero-pa-copy">
+          <div class="section-eyebrow eyebrow-navy">
+            🏛️ Soluzione SaaS B2G per Comuni, ASL e Decisori Pubblici
+          </div>
+          <h1>Gestione del randagismo basata sui dati: efficienza di bilancio e controllo territoriale.</h1>
+          <p class="hero-lead">
+            La prima piattaforma GovTech centralizzata che coordina Comuni, Polizia Locale e Servizi Veterinari ASL. Sostituisce registri cartacei e segnalazioni disperse, riduce i costi di degenza in canile rifugio e si adotta con <strong>affidamento diretto sotto soglia ai sensi del D.Lgs. 36/2023</strong>.
+          </p>
+          <div class="hero-actions-pa">
+            <a href="#contatti-pa" class="btn-primary">Richiedi Incontro o Demo per il tuo Comune</a>
+            <a href="#quadro-normativo" class="btn-secondary">Quadro Normativo (< €140.000)</a>
+          </div>
+
+        </div>
+
+        <div class="dashboard-preview-card">
+          <div class="preview-card-header">
+            <div class="preview-card-title">
+              <span>🏛️ Dashboard Territoriale Ente</span>
+            </div>
+            <span class="status-live">Flusso Dati Attivo</span>
+          </div>
+
+          <div class="preview-stats-row">
+            <div class="mini-stat-box">
+              <span class="mini-stat-label">Segnalazioni Risolte</span>
+              <span class="mini-stat-value">94.2% <span class="mini-stat-delta">↑ +18%</span></span>
+            </div>
+            <div class="mini-stat-box">
+              <span class="mini-stat-label">Colonie Feline Censite</span>
+              <span class="mini-stat-value">38 <span class="mini-stat-delta">100% geoloc</span></span>
+            </div>
+            <div class="mini-stat-box">
+              <span class="mini-stat-label">Tempo Medio Recupero</span>
+              <span class="mini-stat-value">42 min <span class="mini-stat-delta">-65%</span></span>
+            </div>
+            <div class="mini-stat-box">
+              <span class="mini-stat-label">Rette Canile Risparmiate</span>
+              <span class="mini-stat-value">€14.800 <span class="mini-stat-delta">quest'anno</span></span>
+            </div>
+          </div>
+
+          <div class="preview-list-card">
+            <div class="list-item-row">
+              <span><strong>Segnalazione #1042</strong> · Cane smarrito microchippato</span>
+              <span class="badge-ok">Riconsegnato (3h)</span>
+            </div>
+            <div class="list-item-row">
+              <span><strong>Colonia Felina Ovest</strong> · Intervento sterilizzazione ASL</span>
+              <span class="badge-ok">Completato</span>
+            </div>
+            <div class="list-item-row">
+              <span><strong>Allerta Territoriale</strong> · Gatto ferito Via Garibaldi</span>
+              <span class="badge-alert">In carico Polizia Locale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: IL PROBLEMA ECONOMICO E TERRITORIALE -->
+    <section class="section" id="problema">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow eyebrow-orange">Il Problema Economico e Territoriale</div>
+          <h2>Un fenomeno diffuso, gestito senza dati né coordinamento: quanto costa alla collettività.</h2>
+          <p>
+            Oggi la gestione del randagismo grava pesantemente sulla spesa corrente dei Comuni. Segnalazioni frammentate su centralini o social, moduli cartacei e ritardi operativi aumentano a dismisura le giornate di degenza in canile rifugio a carico dell'Ente.
+          </p>
+        </div>
+
+        <div class="macro-grid">
+          <article class="macro-card">
+            <div class="macro-number">€193–248M</div>
+            <div class="macro-title">Spesa pubblica annua (Comuni + ASL)</div>
+            <p class="macro-desc">
+              La spesa complessiva sostenuta annualmente in Italia per rette di mantenimento nei canili convenzionati, soccorsi veterinari e contenziosi. Risorse che StrayCare permette di ottimizzare e ridurre drasticamente.
+            </p>
+            <div class="macro-source">Fonte: Legambiente <em>"Animali in Città"</em> 2024–2025</div>
+          </article>
+
+          <article class="macro-card">
+            <div class="macro-number">358.000</div>
+            <div class="macro-title">Cani randagi stimati sul territorio</div>
+            <p class="macro-desc">
+              A cui si aggiungono milioni di gatti liberi suddivisi in colonie feline spesso prive di un censimento digitale o di un monitoraggio organico delle sterilizzazioni obbligatorie.
+            </p>
+            <div class="macro-source">Fonte: Legambiente</div>
+          </article>
+
+          <article class="macro-card">
+            <div class="macro-number">7.900</div>
+            <div class="macro-title">Comuni in Italia chiamati alla gestione</div>
+            <p class="macro-desc">
+              Titolari delle funzioni di tutela del benessere animale e polizia veterinaria, di cui circa 2.300 con popolazione superiore a 5.000 abitanti, spesso sprovvisti di un software specialistico dedicato.
+            </p>
+            <div class="macro-source">Fonte: ISTAT</div>
+          </article>
+
+          <article class="macro-card">
+            <div class="macro-number">1.001</div>
+            <div class="macro-title">Comuni in dissesto o pre-dissesto finanziario</div>
+            <p class="macro-desc">
+              Circa il 13% dei Comuni italiani si trova in grave difficoltà contabile. Per queste amministrazioni, ogni degenza canile prolungata o gestione caotica peggiora il deficit di bilancio.
+            </p>
+            <div class="macro-source">Fonte: Corte dei Conti (fine 2024)</div>
+          </article>
+        </div>
+
+        <!-- Confronto Operativo -->
+        <div class="comparison-shell">
+          <div class="comparison-grid">
+            <div class="comparison-col col-before">
+              <span class="comparison-badge badge-before">⚠️ Gestione Tradizionale</span>
+              <h3>La situazione attuale negli Enti</h3>
+              <ul class="comparison-list">
+                <li><span class="icon-fail">✕</span> Segnalazioni disperse tra centralini telefonici, PEC, fogli cartacei e social network.</li>
+                <li><span class="icon-fail">✕</span> Assenza di interoperabilità tra Ufficio Ambiente, Polizia Locale e Servizi ASL.</li>
+                <li><span class="icon-fail">✕</span> Mancata tracciabilità delle colonie feline, con rischi sanitari e proteste di vicinato.</li>
+                <li><span class="icon-fail">✕</span> Cani che restano anni nei canili rifugio convenzionati con rette a carico del Comune fino a €1.200–€1.800/anno per animale.</li>
+                <li><span class="icon-fail">✕</span> Report per Giunta e Consiglio redatti manualmente con perdita di tempo prezioso.</li>
+              </ul>
+            </div>
+
+            <div class="comparison-col col-after">
+              <span class="comparison-badge badge-after">🚀 Con StrayCare SaaS B2G</span>
+              <h3>La gestione GovTech integrata</h3>
+              <ul class="comparison-list">
+                <li><span class="icon-check">✓</span> Punto unico centralizzato con segnalazioni georeferenziate, foto e coordinate GPS certe.</li>
+                <li><span class="icon-check">✓</span> Accesso condiviso multi-ente: Comune, Polizia Locale, Veterinari ASL e Associazioni.</li>
+                <li><span class="icon-check">✓</span> Anagrafe digitale colonie feline con mappa di calore, tutor accreditati e storico sterilizzazioni.</li>
+                <li><span class="icon-check">✓</span> Accelerazione delle restituzioni e delle adozioni, riducendo le rette passive di canile.</li>
+                <li><span class="icon-check">✓</span> Cruscotto KPI di decoro urbano ed esportazione automatica dei report in PDF/Excel in 1 clic.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: VANTAGGI OPERATIVI SAAS B2G -->
+    <section class="section" id="soluzione-b2g" style="background: rgba(255, 255, 255, 0.6);">
+      <div class="container">
+        <div class="section-head" id="vantaggi">
+          <div class="section-eyebrow eyebrow-navy">La Soluzione SaaS B2G</div>
+          <h2>Vantaggi operativi per la Pubblica Amministrazione</h2>
+          <p>
+            StrayCare trasforma i dati territoriali generati dai cittadini in un set completo di strumenti operativi per l'Amministrazione, garantendo controllo, risparmio e conformità normativa.
+          </p>
+        </div>
+
+        <div class="b2g-features-grid">
+          <article class="b2g-card">
+            <div class="b2g-card-icon">🏛️</div>
+            <h3>Dashboard Centralizzata Multi-Ente</h3>
+            <p>
+              Accesso operativo differenziato per Ufficio Ambiente/Tutela Animali, Comando di Polizia Locale, Servizi Veterinari ASL e Associazioni convenzionate. Assegnazione ticket d'intervento, tracking delle prese in carico e azzeramento dei rimpalli di responsabilità.
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">Multi-Tenant</span>
+              <span class="b2g-tag">Gestione Ruoli</span>
+              <span class="b2g-tag">Ticket System</span>
+            </div>
+          </article>
+
+          <article class="b2g-card">
+            <div class="b2g-card-icon">🐈</div>
+            <h3>Anagrafe Digitale e Colonie Feline (Solo Cani e Gatti)</h3>
+            <p>
+              Focus rigoroso ed esclusivo su cani e gatti. Censimento georeferenziato di tutte le colonie feline del territorio comunale, anagrafe dei tutor autorizzati, monitoraggio dello stato di sterilizzazione e storico degli interventi sanitari.
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">Solo Cani & Gatti</span>
+              <span class="b2g-tag">Mappa Colonie</span>
+              <span class="b2g-tag">Tutor Accreditati</span>
+            </div>
+          </article>
+
+          <article class="b2g-card">
+            <div class="b2g-card-icon">📊</div>
+            <h3>Report Automatici e KPI di Decoro Urbano</h3>
+            <p>
+              Generazione istantanea di statistiche per la Giunta e il Consiglio Comunale: densità territoriale del fenomeno, tempi medi di presa in carico, indice di adozione/restituzione e stima del risparmio economico sulle rette di degenza.
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">Report 1-Click</span>
+              <span class="b2g-tag">Export PDF/Excel</span>
+              <span class="b2g-tag">KPI Decoro</span>
+            </div>
+          </article>
+
+          <article class="b2g-card">
+            <div class="b2g-card-icon">🛡️</div>
+            <h3>Conformità GDPR e Sicurezza dei Dati</h3>
+            <p>
+              Piena conformità al Regolamento UE 2016/679 (GDPR). Pseudonimizzazione e crittografia delle segnalazioni inviate dai cittadini, consensi informati tracciati e registro degli accessi certificato (audit log) a tutela del RUP e del DPO comunale.
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">GDPR 2016/679</span>
+              <span class="b2g-tag">Crittografia</span>
+              <span class="b2g-tag">Audit Trail</span>
+            </div>
+          </article>
+
+          <article class="b2g-card">
+            <div class="b2g-card-icon">☁️</div>
+            <h3>Roadmap AgID e Requisiti Polo Strategico Nazionale (ACN)</h3>
+            <p>
+              Architettura Cloud SaaS conforme alle linee guida AgID per il procurement di software nella Pubblica Amministrazione. Integrazione in roadmap dei requisiti di sicurezza cibernetica del Polo Strategico Nazionale (ACN).
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">Standard AgID</span>
+              <span class="b2g-tag">Cybersicurezza ACN</span>
+              <span class="b2g-tag">Cloud PA</span>
+            </div>
+          </article>
+
+          <article class="b2g-card">
+            <div class="b2g-card-icon">💶</div>
+            <h3>Sinergia PNRR e Finanziamenti Smart City</h3>
+            <p>
+              Piattaforma predisposta per l'interoperabilità con i sistemi di identità e pagamento della PA (SPID, CIE, PagoPA - PNRR M1C1) ed eleggibile a bandi Smart City (PNRR M2C4) con possibilità di co-finanziamento fino al 70%.
+            </p>
+            <div class="b2g-card-tags">
+              <span class="b2g-tag">PNRR M1C1 / M2C4</span>
+              <span class="b2g-tag">Fondi FSE+</span>
+              <span class="b2g-tag">Co-finanziamento 70%</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: QUADRO NORMATIVO (D.LGS. 36/2023) -->
+    <section class="section" id="quadro-normativo">
+      <div class="container">
+        <div class="legal-box">
+          <div class="legal-copy">
+            <div class="legal-badge-pill">⚖️ Semplificazione Amministrativa</div>
+            <h2>Affidamento diretto sotto soglia ai sensi del D.Lgs. 36/2023.</h2>
+            <p>
+              L'adozione di StrayCare non richiede procedure di gara complesse o mesi di trafila burocratica. Ai sensi dell'<strong>art. 50, comma 1, lettera b) del Nuovo Codice dei Contratti Pubblici (D.Lgs. 36/2023)</strong>, l'affidamento di servizi e forniture software di importo inferiore a <strong>€140.000</strong> avviene mediante affidamento diretto.
+            </p>
+            <p>
+              Tutti i canoni StrayCare (da €2.400 a €18.000 all'anno), anche nel caso di contratti pluriennali (es. convenzione triennale), rientrano pienamente e ampiamente al di sotto della soglia di legge.
+            </p>
+            <a href="#contatti-pa" class="btn-primary" style="background: #fb7a1a; border-color: #fb7a1a;">
+              Richiedi la Scheda Tecnica per il RUP
+            </a>
+          </div>
+
+          <div class="legal-highlight-card">
+            <h4>Procedura di Adozione per la PA</h4>
+            <ul class="legal-steps">
+              <li>
+                <span class="step-num">1</span>
+                <span><strong>Determina a contrarre del RUP:</strong> semplice affidamento diretto sotto la soglia di €140.000 ex art. 50 D.Lgs. 36/2023.</span>
+              </li>
+              <li>
+                <span class="step-num">2</span>
+                <span><strong>Acquisto su MePA / Consip:</strong> disponibile tramite Trattativa Diretta (TD) o Ordine Diretto di Acquisto (ODA).</span>
+              </li>
+              <li>
+                <span class="step-num">3</span>
+                <span><strong>Zero costi infrastrutturali:</strong> software SaaS Cloud, nessun server locale da acquistare o manutenere.</span>
+              </li>
+              <li>
+                <span class="step-num">4</span>
+                <span><strong>Attivazione in 5 giorni:</strong> onboarding guidato, configurazione perimetro comunale e formazione operatori.</span>
+              </li>
+            </ul>
+            <div style="font-size: 0.8rem; color: #94a3b8; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 10px;">
+              Possibilità di sottoscrizione di Lettera d'Intento (LOI) non vincolante per Comuni Pilota.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRICING PER FASCIA DEMOGRAFICA -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow eyebrow-orange">Piani e Tariffe Istituzionali</div>
+          <h2>Pricing SaaS B2G per fascia demografica</h2>
+          <p>
+            Tariffe trasparenti calibrate sulla popolazione del Comune, concepite per garantire un ritorno sull'investimento (ROI) immediato attraverso la riduzione delle degenze passive in canile.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- PICCOLI COMUNI -->
+          <article class="pricing-card">
+            <div class="pricing-header">
+              <h3 class="pricing-tier-name">Comuni Piccoli</h3>
+              <span class="pricing-tier-pop">Popolazione: &lt; 15.000 abitanti</span>
+              <div class="pricing-price-wrap">
+                <span class="pricing-amount">€2.400 – €5.000</span>
+                <span class="pricing-period">/ anno</span>
+              </div>
+              <div class="pricing-monthly-note">Circa €200 – €415 / mese</div>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features-list">
+              <li><span class="check">✓</span> Fino a 5 postazioni operatore (Comune e Polizia Locale)</li>
+              <li><span class="check">✓</span> Anagrafe territoriale cani e gatti con geolocalizzazione</li>
+              <li><span class="check">✓</span> Censimento e monitoraggio colonie feline</li>
+              <li><span class="check">✓</span> Ricezione segnalazioni cittadini con foto e coordinate GPS</li>
+              <li><span class="check">✓</span> Report annuale standard per la Giunta Comunale</li>
+              <li><span class="check">✓</span> Assistenza tecnica e aggiornamenti software inclusi</li>
+            </ul>
+            <a href="#contatti-pa" class="btn-secondary pricing-btn" onclick="selectTier('Comuni Piccoli (< 15.000 ab.)')">Richiedi Offerta</a>
+          </article>
+
+          <!-- MEDI COMUNI (FEATURED) -->
+          <article class="pricing-card featured">
+            <div class="featured-ribbon">Più Diffuso tra i Comuni</div>
+            <div class="pricing-header">
+              <h3 class="pricing-tier-name">Comuni Medi</h3>
+              <span class="pricing-tier-pop">Popolazione: 15.000 – 50.000 abitanti</span>
+              <div class="pricing-price-wrap">
+                <span class="pricing-amount">€5.000 – €10.000</span>
+                <span class="pricing-period">/ anno</span>
+              </div>
+              <div class="pricing-monthly-note">Circa €415 – €830 / mese</div>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features-list">
+              <li><span class="check">✓</span> Fino a 20 postazioni operatore multi-ente</li>
+              <li><span class="check">✓</span> Accesso condiviso: Comune, Polizia Locale e Veterinari ASL</li>
+              <li><span class="check">✓</span> Mappa di calore delle segnalazioni e zone a rischio</li>
+              <li><span class="check">✓</span> Modulo avanzato gestione tutor di colonia e sterilizzazioni</li>
+              <li><span class="check">✓</span> Report trimestrali e cruscotto KPI decoro urbano in tempo reale</li>
+              <li><span class="check">✓</span> Formazione dedicata del personale dell'Ente</li>
+              <li><span class="check">✓</span> Assistenza prioritaria telefonica e telematica</li>
+            </ul>
+            <a href="#contatti-pa" class="btn-primary pricing-btn" onclick="selectTier('Comuni Medi (15.000 - 50.000 ab.)')">Richiedi Offerta</a>
+          </article>
+
+          <!-- GRANDI COMUNI -->
+          <article class="pricing-card">
+            <div class="pricing-header">
+              <h3 class="pricing-tier-name">Comuni Grandi</h3>
+              <span class="pricing-tier-pop">Popolazione: &gt; 50.000 abitanti</span>
+              <div class="pricing-price-wrap">
+                <span class="pricing-amount">€10.000 – €18.000</span>
+                <span class="pricing-period">/ anno</span>
+              </div>
+              <div class="pricing-monthly-note">Circa €830 – €1.500 / mese</div>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features-list">
+              <li><span class="check">✓</span> Postazioni operatore illimitate per tutti i dipartimenti</li>
+              <li><span class="check">✓</span> API per interoperabilità con protocollo e GIS comunale</li>
+              <li><span class="check">✓</span> Modulo completo monitoraggio costi convenzioni canili</li>
+              <li><span class="check">✓</span> Cruscotto analitico per l'Assessore e la Direzione Generale</li>
+              <li><span class="check">✓</span> Account Manager istituzionale dedicato</li>
+              <li><span class="check">✓</span> SLA prioritario con risposta garantita entro 4 ore</li>
+            </ul>
+            <a href="#contatti-pa" class="btn-secondary pricing-btn" onclick="selectTier('Comuni Grandi (> 50.000 ab.)')">Richiedi Offerta</a>
+          </article>
+        </div>
+
+        <p style="font-size: 0.88rem; color: var(--muted); text-align: center; margin-bottom: 40px;">
+          * Fasce indicative previste nel modello economico di StrayCare, da validare e personalizzare con i Comuni pilota. Ammissibile su spesa corrente o fondi digitalizzazione.
+        </p>
+
+        <!-- CALCOLATORE INTERATTIVO DI RISPARMIO / ROI -->
+        <div class="roi-simulator">
+          <div class="roi-grid">
+            <div class="roi-controls">
+              <div>
+                <span class="section-eyebrow eyebrow-orange" style="margin-bottom: 8px;">Simulatore di Impatto sul Bilancio</span>
+                <h3 style="font-size: 1.5rem; margin-bottom: 12px;">Calcola la stima di canone e risparmio per il tuo Comune</h3>
+                <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.5;">
+                  Inserisci la popolazione approssimativa e il numero stimato di cani in convenzione per visualizzare l'impatto economico immediato.
+                </p>
+              </div>
+
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Popolazione residente del Comune</span>
+                  <strong id="popDisplay">25.000 abitanti (Comune Medio)</strong>
+                </div>
+                <input type="range" class="range-slider" id="popRange" min="2000" max="120000" step="1000" value="25000" />
+              </div>
+
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Numero cani attualmente in canile rifugio convenzionato</span>
+                  <strong id="dogsDisplay">35 cani</strong>
+                </div>
+                <input type="range" class="range-slider" id="dogsRange" min="5" max="250" step="5" value="35" />
+              </div>
+            </div>
+
+            <div class="roi-results-box">
+              <div class="result-row">
+                <span>Fascia demografica Ente:</span>
+                <strong id="resTier">Comune Medio (15k–50k ab.)</strong>
+              </div>
+              <div class="result-row">
+                <span>Canone annuo StrayCare:</span>
+                <span class="result-number result-cost" id="resCanone">€6.429 / anno</span>
+              </div>
+              <div class="result-row">
+                <span>Costo annuo canile senza StrayCare:</span>
+                <span class="result-number result-cost" id="resCanile">€49.000 / anno</span>
+              </div>
+              <div class="result-row highlight">
+                <div>
+                  <strong>Risparmio stimato sui costi canile:</strong>
+                  <div style="font-size: 0.78rem; color: var(--muted); font-weight: 500;">Costi canile evitati grazie a meno giornate di degenza</div>
+                </div>
+                <span class="result-number result-saving" id="resRisparmio">+€9.800 / anno</span>
+              </div>
+              <div class="roi-summary-note">
+                Il canone StrayCare è indicato separatamente e non viene sottratto da questo risparmio. Stima basata su una riduzione ipotetica del 20% delle giornate in canile.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: RICHIESTA DEMO E CONTATTO ISTITUZIONALE -->
+    <section class="section" id="contatti-pa">
+      <div class="container">
+        <div class="contact-pa-card">
+          <div class="contact-pa-layout">
+            <div class="contact-info-col">
+              <div class="section-eyebrow eyebrow-navy">Ufficio Relazioni con la PA</div>
+              <h2>Attiva StrayCare o fissa un incontro con il nostro team.</h2>
+              <p>
+                Siamo a disposizione di Sindaci, Assessori alla Tutela Animale, Dirigenti d'Area, Comandanti di Polizia Locale e Servizi Veterinari ASL per organizzare una sessione di demo live, fornire la scheda tecnica per l'affidamento diretto o concordare l'adesione come <strong>Comune Pilota</strong>.
+              </p>
+
+              <div class="contact-details-box">
+                <div class="detail-item">
+                  <span>✉️</span>
+                  <span><strong>Email Istituzionale:</strong> <a href="mailto:straycareofficial@gmail.com">straycareofficial@gmail.com</a></span>
+                </div>
+                <div class="detail-item">
+                  <span>⚖️</span>
+                  <span><strong>Quadro Normativo:</strong> Affidamento Diretto Art. 50 D.Lgs. 36/2023</span>
+                </div>
+                <div class="detail-item">
+                  <span>🏛️</span>
+                  <span><strong>Tempi di risposta:</strong> Entro 24 ore lavorative</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <form class="form-grid" id="paContactForm" novalidate>
+                <div class="form-row-2">
+                  <div class="form-field">
+                    <label for="paName">Nome e Cognome *</label>
+                    <input id="paName" name="name" type="text" placeholder="Es. Dott. Mario Rossi" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="paRole">Ruolo / Incarico Istituzionale *</label>
+                    <select id="paRole" name="role" required>
+                      <option value="" disabled selected>Seleziona qualifica...</option>
+                      <option value="Sindaco / Vicesindaco">Sindaco / Vicesindaco</option>
+                      <option value="Assessore Ambiente / Tutela Animali">Assessore Ambiente / Tutela Animali</option>
+                      <option value="Dirigente / RUP Settore Tecnico-Ambiente">Dirigente / RUP Settore Tecnico-Ambiente</option>
+                      <option value="Comandante / Ufficiale Polizia Locale">Comandante / Ufficiale Polizia Locale</option>
+                      <option value="Direttore / Veterinario Servizio ASL">Direttore / Veterinario Servizio ASL</option>
+                      <option value="Consigliere Comunale">Consigliere Comunale</option>
+                      <option value="Funzionario Amministrativo">Funzionario Amministrativo</option>
+                      <option value="Altro">Altro ruolo istituzionale</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-field">
+                    <label for="paEnte">Nome dell'Ente o Comune *</label>
+                    <input id="paEnte" name="ente" type="text" placeholder="Es. Comune di..." required />
+                  </div>
+                  <div class="form-field">
+                    <label for="paProv">Provincia *</label>
+                    <input id="paProv" name="provincia" type="text" placeholder="Es. Roma, Milano, Bari..." required />
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-field">
+                    <label for="paEmail">Email Istituzionale (.gov.it o ente) *</label>
+                    <input id="paEmail" name="email" type="email" placeholder="nome.cognome@comune.ente.it" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="paPhone">Recapito Telefonico Ufficio / Cellulare</label>
+                    <input id="paPhone" name="phone" type="tel" placeholder="Es. 06 1234567 o mobile" />
+                  </div>
+                </div>
+
+                <div class="form-field">
+                  <label for="paRequestType">Oggetto della Richiesta *</label>
+                  <select id="paRequestType" name="requestType" required>
+                    <option value="" disabled selected>Seleziona tipologia...</option>
+                    <option value="Demo software dal vivo con il team">Demo software dal vivo con il team</option>
+                    <option value="Ricezione Dossier Istituzionale e Scheda RUP (PDF)">Ricezione Dossier Istituzionale e Scheda RUP (PDF)</option>
+                    <option value="Candidatura come Comune Pilota (Lettera d'Intento LOI)">Candidatura come Comune Pilota (Lettera d'Intento LOI)</option>
+                    <option value="Informazioni procedurali MePA / Affidamento Diretto">Informazioni procedurali MePA / Affidamento Diretto</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="paNotes">Note o particolari esigenze dell'Ente</label>
+                  <textarea id="paNotes" name="notes" placeholder="Descrivi brevemente lo stato attuale (es. convenzione canile in scadenza, necessità censimento colonie feline)..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary pa-form-submit" id="paSubmitBtn">
+                  Invia Richiesta Istituzionale
+                </button>
+              </form>
+
+              <div class="form-feedback success" id="paSuccessMsg">
+                <strong>Richiesta inviata con successo.</strong><br />
+                I dettagli della richiesta sono stati inoltrati all'Ufficio Relazioni con la PA (straycareofficial@gmail.com). Un nostro referente istituzionale ti ricontatterà entro 24 ore lavorative.
+              </div>
+              <div class="form-feedback error" id="paErrorMsg">
+                Compila tutti i campi obbligatori con dati e indirizzo email validi per procedere.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER ISTITUZIONALE -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-top-row">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">🐾</span>
+          <span class="brand-copy">
+            <strong>StrayCare GovTech</strong>
+            <span>Territorial Data Platform</span>
+          </span>
+        </div>
+        <nav class="footer-links-row" aria-label="Link rapidi istituzionali">
+          <a href="index.html">← Torna all'App per i Cittadini</a>
+          <a href="#problema">Il Problema</a>
+          <a href="#vantaggi">Vantaggi B2G</a>
+          <a href="#quadro-normativo">D.Lgs. 36/2023</a>
+          <a href="#pricing">Tariffe PA</a>
+          <a href="mailto:straycareofficial@gmail.com">straycareofficial@gmail.com</a>
+        </nav>
+      </div>
+
+      <div class="footer-legal-note">
+        <strong>StrayCare · Piattaforma GovTech per la Gestione del Randagismo e Decoro Urbano.</strong><br />
+        Dati macroeconomici e statistici basati sui rapporti ufficiali di Legambiente (<em>"Animali in Città"</em> 2024–2025), Corte dei Conti (dissesto enti locali, fine 2024) e ISTAT. Contratti sotto soglia per l'affidamento diretto di servizi e forniture ai sensi dell'Art. 50, comma 1, lett. b) del D.Lgs. 36/2023. Trattamento dei dati personali conforme al Regolamento UE 2016/679 (GDPR). Per informazioni istituzionali: <a href="mailto:straycareofficial@gmail.com" style="color: var(--brand); text-decoration: underline;">straycareofficial@gmail.com</a>. © 2026 StrayCare. Tutti i diritti riservati.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+
+    if (menuToggle && mobileMenuDrawer) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Apri menu' : 'Chiudi menu');
+        mobileMenuDrawer.setAttribute('aria-hidden', String(isOpen));
+        mobileMenuDrawer.classList.toggle('is-open', !isOpen);
+      });
+
+      mobileMenuDrawer.addEventListener('click', (event) => {
+        if (event.target.closest('a')) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Apri menu');
+          mobileMenuDrawer.setAttribute('aria-hidden', 'true');
+          mobileMenuDrawer.classList.remove('is-open');
+        }
+      });
+    }
+
+    const revealTargets = document.querySelectorAll(
+      '.hero-pa-copy, .dashboard-preview-card, .section-head, .macro-card, .comparison-shell, .b2g-card, .legal-box, .pricing-card, .roi-simulator, .contact-pa-card'
+    );
+
+    revealTargets.forEach((element, index) => {
+      element.dataset.reveal = '';
+      element.style.transitionDelay = `${Math.min(index % 3, 2) * 80}ms`;
+    });
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+
+      revealTargets.forEach((element) => revealObserver.observe(element));
+    } else {
+      revealTargets.forEach((element) => element.classList.add('is-visible'));
+    }
+
+    // SIMULATORE ROI INTERATTIVO
+    const popRange = document.getElementById('popRange');
+    const dogsRange = document.getElementById('dogsRange');
+    const popDisplay = document.getElementById('popDisplay');
+    const dogsDisplay = document.getElementById('dogsDisplay');
+    const resTier = document.getElementById('resTier');
+    const resCanone = document.getElementById('resCanone');
+    const resCanile = document.getElementById('resCanile');
+    const resRisparmio = document.getElementById('resRisparmio');
+
+    function updateSimulator() {
+      const pop = parseInt(popRange.value, 10);
+      const dogs = parseInt(dogsRange.value, 10);
+
+      // Fascia demografica e canone stimato
+      let tierName = '';
+      let canoneMin = 0;
+      let canoneMax = 0;
+      let canoneAvg = 0;
+
+      if (pop < 15000) {
+        tierName = 'Comune Piccolo (< 15k ab.)';
+        canoneMin = 2400;
+        canoneMax = 5000;
+        canoneAvg = Math.round(canoneMin + (canoneMax - canoneMin) * (pop / 15000));
+        popDisplay.textContent = `${pop.toLocaleString('it-IT')} ab. (Comune Piccolo)`;
+      } else if (pop <= 50000) {
+        tierName = 'Comune Medio (15k–50k ab.)';
+        canoneMin = 5000;
+        canoneMax = 10000;
+        canoneAvg = Math.round(canoneMin + (canoneMax - canoneMin) * ((pop - 15000) / 35000));
+        popDisplay.textContent = `${pop.toLocaleString('it-IT')} ab. (Comune Medio)`;
+      } else {
+        tierName = 'Comune Grande (> 50k ab.)';
+        canoneMin = 10000;
+        canoneMax = 18000;
+        canoneAvg = Math.round(canoneMin + (canoneMax - canoneMin) * (Math.min(pop - 50000, 70000) / 70000));
+        popDisplay.textContent = `${pop.toLocaleString('it-IT')} ab. (Comune Grande)`;
+      }
+
+      dogsDisplay.textContent = `${dogs} cani in convenzione`;
+
+      // Costo annuo convenzione canile (media settore: circa €1.400 / cane / anno, ossia ~€3.80/giorno)
+      const costoCanileAnnuo = dogs * 1400;
+
+      // Risparmio stimato con tracciamento, riaffidi rapidi e riduzione degenze del 20%
+      const risparmioLordo = Math.round(costoCanileAnnuo * 0.20);
+
+      resTier.textContent = tierName;
+      resCanone.textContent = `€${canoneAvg.toLocaleString('it-IT')} / anno`;
+      resCanile.textContent = `€${costoCanileAnnuo.toLocaleString('it-IT')} / anno`;
+      resRisparmio.textContent = `+€${risparmioLordo.toLocaleString('it-IT')} / anno`;
+      resRisparmio.classList.remove('negative');
+    }
+
+    if (popRange && dogsRange) {
+      popRange.addEventListener('input', updateSimulator);
+      dogsRange.addEventListener('input', updateSimulator);
+      updateSimulator();
+    }
+
+    function selectTier(tierName) {
+      const select = document.getElementById('paRequestType');
+      const notes = document.getElementById('paNotes');
+      if (notes) {
+        notes.value = `Richiesta informazioni per fascia: ${tierName}`;
+      }
+    }
+
+    // GESTIONE FORM CONTATTO PA
+    const paContactForm = document.getElementById('paContactForm');
+    const paSuccessMsg = document.getElementById('paSuccessMsg');
+    const paErrorMsg = document.getElementById('paErrorMsg');
+    const paSubmitBtn = document.getElementById('paSubmitBtn');
+
+    if (paContactForm) {
+      paContactForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const lead = {
+          name: document.getElementById('paName').value.trim(),
+          role: document.getElementById('paRole').value,
+          ente: document.getElementById('paEnte').value.trim(),
+          provincia: document.getElementById('paProv').value.trim(),
+          email: document.getElementById('paEmail').value.trim(),
+          phone: document.getElementById('paPhone').value.trim(),
+          requestType: document.getElementById('paRequestType').value,
+          notes: document.getElementById('paNotes').value.trim()
+        };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!lead.name || !lead.role || !lead.ente || !lead.provincia || !lead.email || !emailPattern.test(lead.email) || !lead.requestType) {
+          paErrorMsg.textContent = 'Compila tutti i campi obbligatori con dati e indirizzo email validi per procedere.';
+          paErrorMsg.style.display = 'block';
+          paSuccessMsg.style.display = 'none';
+          return;
+        }
+
+        paErrorMsg.style.display = 'none';
+        paSubmitBtn.disabled = true;
+        paSubmitBtn.textContent = 'Invio in corso...';
+
+        const isPreview = window.location.protocol === 'file:'
+          || window.location.hostname === 'localhost'
+          || window.location.hostname === '127.0.0.1'
+          || window.location.port === '5500';
+
+        try {
+          if (isPreview) {
+            const existing = JSON.parse(localStorage.getItem('straycare-pa-leads') || '[]');
+            existing.push({ ...lead, date: new Date().toISOString() });
+            localStorage.setItem('straycare-pa-leads', JSON.stringify(existing));
+            paContactForm.style.display = 'none';
+            paSuccessMsg.innerHTML = '<strong>Richiesta salvata in questa preview.</strong><br />L’invio email sarà attivo quando il backend sarà configurato in produzione.';
+            paSuccessMsg.style.display = 'block';
+            return;
+          }
+
+          const response = await fetch('/api/pa-contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(lead)
+          });
+          const payload = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error(payload.error || 'Invio non riuscito');
+          }
+
+          paContactForm.style.display = 'none';
+          paSuccessMsg.innerHTML = payload.warning === 'smtp-not-configured'
+            ? '<strong>Richiesta registrata.</strong><br />L’invio email sarà attivo quando il backend sarà configurato.'
+            : '<strong>Richiesta inviata con successo.</strong><br />Abbiamo inviato una conferma alla tua email e inoltrato i dettagli all’Ufficio Relazioni con la PA.';
+          paSuccessMsg.style.display = 'block';
+        } catch (error) {
+          paErrorMsg.textContent = 'Non siamo riusciti a inviare la richiesta. Riprova tra poco.';
+          paErrorMsg.style.display = 'block';
+          paSuccessMsg.style.display = 'none';
+        } finally {
+          paSubmitBtn.disabled = false;
+          paSubmitBtn.textContent = 'Invia Richiesta Istituzionale';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

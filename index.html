@@ -6,6 +6,7 @@
   <title>StrayCare | Tutela concreta per gli animali randagi</title>
   <meta name="description" content="StrayCare connette cittadini, volontari e associazioni per segnalare, seguire e aiutare gli animali randagi con una landing chiara, moderna e responsive." />
   <meta name="theme-color" content="#fb7a1a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐾</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -176,6 +177,7 @@
       background: var(--brand);
       color: #fff;
       border: 1px solid var(--brand);
+      font-size: 0.9rem;
     }
 
     .button-primary:hover,
@@ -190,6 +192,7 @@
       background: transparent;
       color: var(--brand);
       border-color: var(--brand);
+      font-size: 0.9rem;
     }
 
     .button-secondary:hover,
@@ -280,6 +283,68 @@
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
+    }
+
+    .hero-pa-badge {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 22px;
+      padding: 10px 13px 10px 10px;
+      border: 1px solid rgba(251, 122, 26, 0.24);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #7a665a;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      box-shadow: 0 5px 16px rgba(25, 33, 42, 0.04);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .hero-pa-badge:hover,
+    .hero-pa-badge:focus-visible {
+      border-color: rgba(251, 122, 26, 0.52);
+      box-shadow: 0 8px 22px rgba(251, 122, 26, 0.1);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .hero-pa-badge::before {
+      content: "PA";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .hero-pa-badge strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .hero-pa-badge span {
+      display: block;
+      margin-top: 2px;
+    }
+
+    .hero-pa-badge::after {
+      content: "→";
+      color: var(--brand);
+      font-size: 1.05rem;
+      font-weight: 800;
     }
 
     .hero-mockup-wrapper {
@@ -775,6 +840,245 @@
       }
     }
 
+    /* HEADER ACTIONS & BUTTONS */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-comuni-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(251, 122, 26, 0.4);
+      background: #ffffff;
+      color: #ba4c00;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-comuni-header:hover {
+      background: #fff4ea;
+      border-color: var(--brand);
+      color: #933800;
+      transform: translateY(-1px);
+    }
+
+    .comuni-label-short {
+      display: none;
+    }
+
+    /* HAMBURGER MENU TOGGLE */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background: transparent;
+      border: 1px solid rgba(25, 33, 42, 0.12);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(25, 33, 42, 0.04);
+    }
+
+    .menu-toggle .bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #1d1d1f;
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* MOBILE MENU DRAWER */
+    .mobile-menu-drawer {
+      max-height: 0;
+      border-top: 1px solid rgba(25, 33, 42, 0.06);
+      background: rgba(255, 253, 251, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-menu-drawer.is-open {
+      max-height: 500px;
+      padding: 16px 20px 24px;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-drawer a {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #1d1d1f;
+      padding: 8px 4px;
+      transition: color 0.2s ease;
+    }
+
+    .mobile-menu-drawer a:hover {
+      color: var(--brand);
+    }
+
+    .mobile-pa-link {
+      color: #ba4c00 !important;
+      font-weight: 700 !important;
+      border-top: 1px dashed rgba(25, 33, 42, 0.1);
+      padding-top: 14px !important;
+      margin-top: 4px;
+    }
+
+    .mobile-cta {
+      margin-top: 6px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* RESPONSIVE TABS SCROLLBAR */
+    @media (max-width: 768px) {
+      .selector-nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 12px 6px 16px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+      .selector-nav::-webkit-scrollbar {
+        height: 4px;
+      }
+      .selector-nav::-webkit-scrollbar-thumb {
+        background: rgba(25, 33, 42, 0.15);
+        border-radius: 4px;
+      }
+      .tab-button {
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .menu-toggle {
+        display: flex;
+      }
+      .nav {
+        display: none !important;
+      }
+      .btn-comuni-header {
+        display: inline-flex;
+        min-height: 36px;
+        padding: 0 10px;
+        font-size: 0.76rem;
+      }
+      .header-actions {
+        gap: 6px;
+      }
+      .nav-cta {
+        min-height: 36px;
+        padding: 0 10px;
+        font-size: 0.76rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .header-inner {
+        min-height: 60px;
+        gap: 8px;
+      }
+      .brand-copy span {
+        display: none;
+      }
+      .brand-copy strong {
+        font-size: 0.96rem;
+      }
+      .brand-mark {
+        font-size: 1.1rem;
+      }
+      .btn-comuni-header {
+        padding-inline: 9px;
+      }
+      .comuni-label-full {
+        display: none;
+      }
+      .comuni-label-short {
+        display: inline;
+      }
+      .hero-pa-badge {
+        width: 100%;
+      }
+    }
+    @media (max-width: 380px) {
+      .header-inner {
+        flex-wrap: wrap;
+        padding: 8px 0;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .btn-comuni-header {
+        min-width: 72px;
+        padding-inline: 7px;
+      }
+      .nav-cta {
+        min-width: 72px;
+        padding-inline: 7px;
+      }
+    }
+
+    .footer-brand-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      align-items: center;
+    }
+
+    .footer-links a:hover {
+      color: var(--brand);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after {
@@ -800,7 +1104,27 @@
         <a href="#selector">App</a>
         <a href="#waitlist">Waitlist</a>
       </nav>
-      <a class="nav-cta" href="#waitlist">Unisciti ora</a>
+      <div class="header-actions">
+        <a class="btn-comuni-header" href="comuni.html"><span class="comuni-label-full">Area Comuni</span><span class="comuni-label-short">Area PA</span><span aria-hidden="true">🏛️</span></a>
+        <a class="nav-cta" href="#waitlist">Unisciti ora</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Apri menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu a tendina per dispositivi mobili -->
+    <div class="mobile-menu-drawer" id="mobileMenuDrawer" aria-hidden="true">
+      <div class="container" style="display:flex; flex-direction:column; gap:10px;">
+        <a href="#mission">Missione</a>
+        <a href="#gallery">Loro</a>
+        <a href="#selector">App</a>
+        <a href="#waitlist">Waitlist</a>
+        <a href="comuni.html" class="mobile-pa-link">🏛️ Area Istituzionale Comuni & PA</a>
+        <a href="#waitlist" class="button-primary mobile-cta">Unisciti ora</a>
+      </div>
     </div>
   </header>
 
@@ -817,6 +1141,9 @@
             <a class="button-primary" href="#selector">Esplora l'app</a>
             <a class="button-secondary" href="#waitlist">Ricevi gli aggiornamenti</a>
           </div>
+          <a class="hero-pa-badge" href="comuni.html" aria-label="Scopri l'Area Comuni per la pubblica amministrazione">
+            <span><strong>Se lavori nella Pubblica Amministrazione</strong><span>Scopri strumenti e soluzioni per il tuo Comune</span></span>
+          </a>
         </div>
 
         <div class="hero-mockup-wrapper" data-reveal>
@@ -896,68 +1223,55 @@
           <div class="selector-nav" role="tablist" aria-label="Funzionalità StrayCare">
             <button class="tab-button" type="button" role="tab" aria-pressed="true" data-target="home">Home</button>
             <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="mappa">Mappa</button>
+            <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="segnalazioni">Segnalazioni</button>
             <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="community">Community</button>
             <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="preferiti">Preferiti</button>
+            <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="scheda-animale">Scheda Animale</button>
             <button class="tab-button" type="button" role="tab" aria-pressed="false" data-target="classifica">Classifica</button>
           </div>
 
           <div class="selector-content">
             <div class="preview-shell" data-panel="home" data-fit="tall">
               <div class="preview-frame">
-                <img src="images/mockup-home.png" alt="Mockup home di StrayCare con riepilogo e accessi rapidi" />
+                <img src="images/mockup-home.png" alt="Mockup schermata Home di StrayCare con riepilogo attività e accessi rapidi" />
               </div>
             </div>
             <div class="preview-shell" data-panel="mappa" hidden data-fit="wide">
               <div class="preview-frame">
-                <img src="images/mockup-mappa.png" alt="Mockup mappa di StrayCare con segnalazioni geolocalizzate" />
+                <img src="images/mockup-mappa.png" alt="Mockup schermata Mappa geolocalizzata di StrayCare con animali censiti" />
+              </div>
+            </div>
+            <div class="preview-shell" data-panel="segnalazioni" hidden data-fit="tall">
+              <div class="preview-frame">
+                <img src="images/mockup-segnalazione.gif" alt="Mockup animato flusso di segnalazione rapida con foto e GPS di StrayCare" />
               </div>
             </div>
             <div class="preview-shell" data-panel="community" hidden data-fit="tall">
               <div class="preview-frame">
-                <img src="images/mockup-community.png" alt="Mockup community di StrayCare con notifiche e attività" />
+                <img src="images/mockup-community.png" alt="Mockup schermata Community di StrayCare per il coordinamento dei volontari" />
               </div>
             </div>
             <div class="preview-shell" data-panel="preferiti" hidden data-fit="tall">
               <div class="preview-frame">
-                <img src="images/mockup-preferiti.png" alt="Mockup preferiti di StrayCare per salvare i casi da seguire" />
+                <img src="images/mockup-preferiti.png" alt="Mockup schermata Preferiti di StrayCare per il monitoraggio dei casi critici" />
+              </div>
+            </div>
+            <div class="preview-shell" data-panel="scheda-animale" hidden data-fit="tall">
+              <div class="preview-frame">
+                <img src="images/mockup-dettagli.png" alt="Mockup schermata Scheda Animale di StrayCare con storico pasti, cure veterinarie e verifiche" />
               </div>
             </div>
             <div class="preview-shell" data-panel="classifica" hidden data-fit="tall">
               <div class="preview-frame">
-                <img src="images/mockup-classifica.png" alt="Mockup classifica di StrayCare con i contributori più attivi" />
+                <img src="images/mockup-classifica.png" alt="Mockup schermata Classifica di StrayCare con i contributori e volontari più attivi" />
               </div>
             </div>
 
             <div class="panel-copy">
               <h3 id="panelTitle">Home che guida all'azione</h3>
-              <p id="panelText">Il punto di partenza della navigazione: una dashboard che mostra subito lo stato del progetto, il ritmo della community e gli accessi più utili.</p>
+              <p id="panelText">Il punto di partenza della navigazione: una dashboard che mostra subito lo stato del territorio, gli avvisi urgenti, il ritmo della community e gli accessi più utili.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <div class="section-tag">Funzioni chiave</div>
-          <h2>Semplice. Coordinata. Concreta.</h2>
-          <p>Abbiamo racchiuso in pochi e semplici passaggi tutto il necessario per coordinare i soccorsi, monitorare lo stato di salute dei randagi e proteggere il loro futuro.</p>
-        </div>
-
-        <div class="support-grid">
-          <article class="card" data-reveal>
-            <h3>Mappa geolocalizzata</h3>
-            <p>Visualizza rapidamente dove si trovano le segnalazioni e dove serve un intervento più urgente.</p>
-          </article>
-          <article class="card" data-reveal>
-            <h3>Preferiti e monitoraggio</h3>
-            <p>Salva i casi da seguire per mantenere continuità nel tempo, senza perdere il focus sugli animali più delicati.</p>
-          </article>
-          <article class="card" data-reveal>
-            <h3>Community e motivazione</h3>
-            <p>Notifiche, aggiornamenti e classifica aiutano a mantenere alta la partecipazione della rete locale.</p>
-          </article>
         </div>
       </div>
     </section>
@@ -988,7 +1302,16 @@
 
   <footer class="footer">
     <div class="container footer-top">
-      <div>© 2026 StrayCare. Tutti i diritti riservati.</div>
+      <div class="footer-brand-info">
+        <div>© 2026 StrayCare · Piattaforma GovTech per la Gestione del Randagismo.</div>
+        <div class="footer-links">
+          <a href="comuni.html"><strong>Area Comuni & PA (SaaS B2G)</strong></a>
+          <span>·</span>
+          <a href="comuni.html#quadro-normativo">Affidamento Diretto D.Lgs. 36/2023</a>
+          <span>·</span>
+          <a href="mailto:straycareofficial@gmail.com">Contatta Ufficio PA</a>
+        </div>
+      </div>
       <nav class="socials" aria-label="Link social">
         <a href="#" aria-label="Instagram StrayCare">Instagram</a>
         <a href="#" aria-label="Facebook StrayCare">Facebook</a>
@@ -998,6 +1321,28 @@
   </footer>
 
   <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+
+    if (menuToggle && mobileMenuDrawer) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Apri menu' : 'Chiudi menu');
+        mobileMenuDrawer.setAttribute('aria-hidden', String(isOpen));
+        mobileMenuDrawer.classList.toggle('is-open', !isOpen);
+      });
+
+      mobileMenuDrawer.addEventListener('click', (event) => {
+        if (event.target.closest('a')) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Apri menu');
+          mobileMenuDrawer.setAttribute('aria-hidden', 'true');
+          mobileMenuDrawer.classList.remove('is-open');
+        }
+      });
+    }
+
     const waitlistForm = document.getElementById('waitlistForm');
     const emailInput = document.getElementById('email');
     const submitButton = document.getElementById('submitButton');
@@ -1015,31 +1360,50 @@
     const panelCopy = {
       home: {
         title: "Home che guida all'azione",
-        text: "Il punto di partenza della navigazione: una dashboard che mostra subito lo stato del progetto, il ritmo della community e gli accessi più utili."
+        text: "Il punto di partenza della navigazione: una dashboard che mostra subito lo stato del territorio, gli avvisi urgenti, il ritmo della community e gli accessi più utili."
       },
       mappa: {
-        title: "Mappa geolocalizzata",
-        text: "La vista che rende immediata la lettura del territorio e aiuta a capire dove intervenire prima."
+        title: "Mappa interattiva e geolocalizzata",
+        text: "La vista che rende immediata la lettura del territorio: individua dove si trovano gli animali segnalati, filtra per specie e livello di urgenza, e coordina le uscite."
+      },
+      segnalazioni: {
+        title: "Segnalazione rapida con foto e GPS",
+        text: "Flusso guidato in pochi passaggi: scatta o carica una foto, geolocalizza in automatico la posizione e indica lo stato di salute per allertare subito la rete di soccorso locale."
       },
       community: {
-        title: "Community viva",
-        text: "Il luogo in cui cittadini e volontari si coordinano, scambiano aggiornamenti e mantengono vivo ogni caso."
+        title: "Community viva e coordinamento",
+        text: "Il luogo in cui cittadini, volontari e associazioni comunicano: aggiornamenti in tempo reale, richieste di supporto e avvisi per non disperdere le informazioni."
       },
       preferiti: {
         title: "Preferiti per non perdere il focus",
-        text: "Una lista personale per salvare i casi da seguire nel tempo, soprattutto quando la situazione si evolve."
+        text: "Una lista personale per salvare e monitorare i casi più delicati, ricevendo notifiche su pasti somministrati, visite veterinarie e progressi nel tempo."
+      },
+      "scheda-animale": {
+        title: "Scheda clinica e anagrafica dell'animale",
+        text: "Dettaglio completo per ogni animale: storico pasti con timer di controllo, trattamenti medici registrati, microchip/identificativo e diario degli interventi con conferma verificata."
       },
       classifica: {
         title: "Classifica dei contributori",
-        text: "La parte più motivante del sistema: riconoscere l'impegno e rendere visibile il valore della partecipazione."
+        text: "La parte più motivante del sistema: gamification responsabile per premiare la costanza, riconoscere l'impegno civico e valorizzare chi aiuta concretamente sul territorio."
       }
     };
 
     function showPanel(target) {
       tabButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.target === target)));
-      panels.forEach((panel) => panel.hidden = panel.dataset.panel !== target);
-      panelTitle.textContent = panelCopy[target].title;
-      panelText.textContent = panelCopy[target].text;
+      panels.forEach((panel) => {
+        const isTarget = panel.dataset.panel === target;
+        panel.hidden = !isTarget;
+        if (isTarget && target === 'segnalazioni') {
+          const gifImg = panel.querySelector('img');
+          if (gifImg && !gifImg.src.includes('t=')) {
+            gifImg.src = 'images/mockup-segnalazione.gif';
+          }
+        }
+      });
+      if (panelCopy[target]) {
+        panelTitle.textContent = panelCopy[target].title;
+        panelText.textContent = panelCopy[target].text;
+      }
     }
 
     tabButtons.forEach((button) => {
